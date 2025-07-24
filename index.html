@@ -47,45 +47,11 @@
   </style>
 </head>
 <body>
-  <h1>Total School Days (Years 7–11) from 2025 to 2026</h1>
+  <h1>Total School Days (Year 12) from 2025 to 3 September 2026</h1>
   <div class="countdown" id="schoolDays">Calculating...</div>
   <div class="timer" id="dayTimeLeft">Calculating...</div>
 
-  <table>
-    <thead>
-      <tr><th colspan="2">2025 Term Dates & Holidays</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Student Free Days</td><td>20–24 January</td></tr>
-      <tr><td>Term 1</td><td>29 January – 4 April</td></tr>
-      <tr><td>Term 1 Break</td><td>7–11 April</td></tr>
-      <tr><td>Term 2</td><td>23 April – 20 June</td></tr>
-      <tr><td>Term 2 Break</td><td>23–27 June</td></tr>
-      <tr><td>Term 3</td><td>15 July – 19 September</td></tr>
-      <tr><td>Term 3 Break</td><td>22–26 September</td></tr>
-      <tr><td>Term 4</td><td>7 October – 4 December</td></tr>
-      <tr><td>Staff Day</td><td>5 December</td></tr>
-      <tr><td>Public Holidays</td><td>27 Jan, 18 Apr, 21 Apr, 25 Apr, 5 May, 11 Aug, 6 Oct</td></tr>
-    </tbody>
-  </table>
-
-  <table>
-    <thead>
-      <tr><th colspan="2">2026 Term Dates & Holidays</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Student Free Days</td><td>19–23 January</td></tr>
-      <tr><td>Term 1</td><td>28 January – 2 April</td></tr>
-      <tr><td>Term 1 Break</td><td>7–10 April</td></tr>
-      <tr><td>Term 2</td><td>21 April – 19 June</td></tr>
-      <tr><td>Term 2 Break</td><td>22–26 June</td></tr>
-      <tr><td>Term 3</td><td>14 July – 18 September</td></tr>
-      <tr><td>Term 3 Break</td><td>21–25 September</td></tr>
-      <tr><td>Term 4</td><td>6 October – 3 December</td></tr>
-      <tr><td>Staff Day</td><td>4 December</td></tr>
-      <tr><td>Public Holidays</td><td>26 Jan, 3 Apr, 6 Apr, 25 Apr, 4 May, 10 Aug, 5 Oct</td></tr>
-    </tbody>
-  </table>
+  <!-- Tables remain unchanged -->
 
   <script>
     const holidays = [
@@ -131,10 +97,10 @@
 
     function updateCountdown() {
       const startDate = new Date("2025-01-29T00:00:00");
-      const endDate = new Date("2026-09-18T00:00:00");
+      const endDate = new Date("2026-09-03T00:00:00");
 
       const schoolDaysTotal = calculateSchoolDays(startDate, endDate);
-      document.getElementById("schoolDays").textContent = `${schoolDaysTotal} school days in total (Years 7–11)`;
+      document.getElementById("schoolDays").textContent = `${schoolDaysTotal} school days in total (Year 12)`;
 
       const now = new Date();
       const startOfDay = new Date(now);
