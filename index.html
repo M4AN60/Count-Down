@@ -5,33 +5,58 @@
   <title>School Days Countdown</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
-    #count {
-      font-size: 48px;
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+    .countdown {
+      font-size: 3em;
       font-weight: bold;
       color: #2c3e50;
+      margin: 10px 0;
+    }
+    .timer {
+      font-size: 1.2em;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <h1>School Days Left Until 3 September 2026</h1>
-  <div id="count">Calculating...</div>
+  <h1>School Days Countdown to 3 September 2026</h1>
+  <div class="countdown" id="schoolDays">Calculating...</div>
+  <div class="timer" id="dayTimeLeft">Calculating...</div>
 
   <script>
+    // Custom public holidays or student-free days
+    const holidays = [
+      "2026-08-10" // Example: EKKA Public Holiday in Brisbane
+    ];
+
     function isWeekend(date) {
       const day = date.getDay();
-      return day === 0 || day === 6; // Sunday or Saturday
+      return day === 0 || day === 6;
+    }
+
+    function isHoliday(date) {
+      const dateStr = date.toISOString().split('T')[0];
+      return holidays.includes(dateStr);
     }
 
     function calculateSchoolDays(startDate, endDate) {
       let count = 0;
       let current = new Date(startDate);
-
       while (current <= endDate) {
-        if (!isWeekend(current)) {
+        if (!isWeekend(current) && !isHoliday(current)) {
           count++;
         }
         current.setDate(current.getDate() + 1);
@@ -41,18 +66,48 @@
 
     function updateCountdown() {
       const today = new Date();
-      const endDate = new Date("2026-09-03");
-      
+      const endDate = new Date("2026-09-03T00:00:00");
+
       if (today > endDate) {
-        document.getElementById("count").textContent = "School has finished!";
+        document.getElementById("schoolDays").textContent = "School has finished!";
+        document.getElementById("dayTimeLeft").textContent = "Enjoy your holidays!";
         return;
       }
 
       const schoolDaysLeft = calculateSchoolDays(today, endDate);
-      document.getElementById("count").textContent = `${schoolDaysLeft} school days left`;
+      document.getElementById("schoolDays").textContent = `${schoolDaysLeft} school days left`;
+
+      // School day hours 8:30 AM to 3:00 PM
+      const now = new Date();
+      const startOfDay = new Date(now);
+      startOfDay.setHours(8, 30, 0, 0);
+      const endOfDay = new Date(now);
+      endOfDay.setHours(15, 0, 0, 0);
+
+      let timeMessage = "";
+      if (now < startOfDay) {
+        const diff = startOfDay - now;
+        timeMessage = `School starts in ${formatTime(diff)}`;
+      } else if (now > endOfDay) {
+        timeMessage = "School is over for today!";
+      } else {
+        const diff = endOfDay - now;
+        timeMessage = `Time left in school day: ${formatTime(diff)}`;
+      }
+
+      document.getElementById("dayTimeLeft").textContent = timeMessage;
+    }
+
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return `${hours}h ${minutes}m ${seconds}s`;
     }
 
     updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
