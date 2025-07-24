@@ -32,14 +32,13 @@
   </style>
 </head>
 <body>
-  <h1>School Days Countdown to 3 September 2026</h1>
+  <h1>School Days Countdown to 3 December 2026</h1>
   <div class="countdown" id="schoolDays">Calculating...</div>
   <div class="timer" id="dayTimeLeft">Calculating...</div>
 
   <script>
-    // Custom public holidays or student-free days
     const holidays = [
-      "2026-08-10" // Example: EKKA Public Holiday in Brisbane
+      "2026-08-10" // Example: EKKA Public Holiday
     ];
 
     function isWeekend(date) {
@@ -66,7 +65,7 @@
 
     function updateCountdown() {
       const today = new Date();
-      const endDate = new Date("2026-09-03T00:00:00");
+      const endDate = new Date("2026-12-03T00:00:00");
 
       if (today > endDate) {
         document.getElementById("schoolDays").textContent = "School has finished!";
@@ -77,37 +76,11 @@
       const schoolDaysLeft = calculateSchoolDays(today, endDate);
       document.getElementById("schoolDays").textContent = `${schoolDaysLeft} school days left`;
 
-      // School day hours 8:30 AM to 3:00 PM
       const now = new Date();
       const startOfDay = new Date(now);
-      startOfDay.setHours(8, 30, 0, 0);
+      startOfDay.setHours(8, 25, 0, 0);
       const endOfDay = new Date(now);
-      endOfDay.setHours(15, 0, 0, 0);
+      endOfDay.setHours(15, 25, 0, 0);
 
       let timeMessage = "";
       if (now < startOfDay) {
-        const diff = startOfDay - now;
-        timeMessage = `School starts in ${formatTime(diff)}`;
-      } else if (now > endOfDay) {
-        timeMessage = "School is over for today!";
-      } else {
-        const diff = endOfDay - now;
-        timeMessage = `Time left in school day: ${formatTime(diff)}`;
-      }
-
-      document.getElementById("dayTimeLeft").textContent = timeMessage;
-    }
-
-    function formatTime(ms) {
-      const totalSeconds = Math.floor(ms / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-      return `${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
-</body>
-</html>
