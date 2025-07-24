@@ -32,13 +32,18 @@
   </style>
 </head>
 <body>
-  <h1>School Days Countdown to 3 December 2026</h1>
+  <h1>School Days Countdown to 3 September 2026</h1>
   <div class="countdown" id="schoolDays">Calculating...</div>
   <div class="timer" id="dayTimeLeft">Calculating...</div>
 
   <script>
+    // List public holidays and school holidays to exclude
     const holidays = [
-      "2026-08-10" // Example: EKKA Public Holiday
+      "2026-04-06", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", // Easter break
+      "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", // Mid-year break
+      "2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", // September break
+      "2026-01-01", "2026-01-26", "2026-04-03", "2026-04-06", // Public holidays (New Year, Aus Day, Good Friday, Easter Mon)
+      "2026-08-10" // EKKA (Brisbane Show Day)
     ];
 
     function isWeekend(date) {
@@ -65,7 +70,7 @@
 
     function updateCountdown() {
       const today = new Date();
-      const endDate = new Date("2026-12-03T00:00:00");
+      const endDate = new Date("2026-09-03T00:00:00");
 
       if (today > endDate) {
         document.getElementById("schoolDays").textContent = "School has finished!";
@@ -84,3 +89,28 @@
 
       let timeMessage = "";
       if (now < startOfDay) {
+        const diff = startOfDay - now;
+        timeMessage = `School starts in ${formatTime(diff)}`;
+      } else if (now > endOfDay) {
+        timeMessage = "School is over for today!";
+      } else {
+        const diff = endOfDay - now;
+        timeMessage = `Time left in school day: ${formatTime(diff)}`;
+      }
+
+      document.getElementById("dayTimeLeft").textContent = timeMessage;
+    }
+
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
