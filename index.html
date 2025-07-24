@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>School Days Countdown</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    #count {
+      font-size: 48px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <h1>School Days Left Until 3 September 2026</h1>
+  <div id="count">Calculating...</div>
+
+  <script>
+    function isWeekend(date) {
+      const day = date.getDay();
+      return day === 0 || day === 6; // Sunday or Saturday
+    }
+
+    function calculateSchoolDays(startDate, endDate) {
+      let count = 0;
+      let current = new Date(startDate);
+
+      while (current <= endDate) {
+        if (!isWeekend(current)) {
+          count++;
+        }
+        current.setDate(current.getDate() + 1);
+      }
+      return count;
+    }
+
+    function updateCountdown() {
+      const today = new Date();
+      const endDate = new Date("2026-09-03");
+      
+      if (today > endDate) {
+        document.getElementById("count").textContent = "School has finished!";
+        return;
+      }
+
+      const schoolDaysLeft = calculateSchoolDays(today, endDate);
+      document.getElementById("count").textContent = `${schoolDaysLeft} school days left`;
+    }
+
+    updateCountdown();
+  </script>
+</body>
+</html>
